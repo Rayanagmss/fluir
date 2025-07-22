@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resposta</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/detalhe-entrega.css') }}" />
+</head>
+<body>
+  <section class="section">
+    <div class="form-box">
+      <h2>Resultado</h2>
+      <!-- Mensagem dinâmica vinda do Flask -->
+      <p>{{ mensagem }}</p>
+      <a href="/">Voltar</a>
+    </div>
+  </section>
+</body>
+</html>
