@@ -52,7 +52,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem; /* espaçamento entre os elementos */
+    gap: 1.5rem; 
 }
 
 main {
@@ -86,7 +86,7 @@ main {
     font-size: 1rem;
 }
 .mapa {
-    margin-top: 1rem; /* distância entre texto e imagem */
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
