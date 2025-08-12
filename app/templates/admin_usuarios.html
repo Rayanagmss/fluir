@@ -1,241 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Usuários - Fluir</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --cor-primaria: #047373;
-            --cor-primaria-escura: #035c5c;
-            --cor-perigo: #dc3545;
-            --cor-perigo-hover: #a71d2a;
-            --cinza-claro: #f5f5f5;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafc;
-            color: #333;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
-        }
-
-        h1 {
-            margin-bottom: 25px;
-            font-size: 28px;
-            color: var(--cor-primaria);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .admin-actions {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background-color: var(--cor-primaria);
-            color: #fff;
-            padding: 10px 16px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.2s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background-color: var(--cor-primaria-escura);
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 0.85em;
-        }
-
-        .btn-danger {
-            background-color: var(--cor-perigo);
-        }
-
-        .btn-danger:hover {
-            background-color: var(--cor-perigo-hover);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        th {
-            background-color: var(--cinza-claro);
-            font-weight: 600;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #fafafa;
-        }
-
-        tbody tr:hover {
-            background-color: #f1f7ff;
-        }
-
-        .actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        form {
-            display: inline;
-        }
-
-        .flash-messages {
-            background-color: #d1f1f0;
-            color: var(--cor-primaria-escura);
-            border: 1px solid #b2e3e1;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 600px) {
-            .admin-actions {
-                flex-direction: column;
-            }
-
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            th {
-                position: absolute;
-                left: -9999px;
-                top: -9999px;
-            }
-
-            td {
-                position: relative;
-                padding-left: 50%;
-                border: none;
-                border-bottom: 1px solid #eee;
-            }
-
-            td:before {
-                position: absolute;
-                top: 14px;
-                left: 14px;
-                width: 45%;
-                white-space: nowrap;
-                font-weight: bold;
-                color: #555;
-                content: attr(data-label);
-            }
-
-            .actions {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Pedidos - Fluir</title>
+<style>
+    :root {
+        --cor-primaria: #047373;
+        --cor-primaria-escura: #035c5c;
+        --cor-sucesso: #28a745;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f9fafc;
+        padding: 20px;
+    }
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background: #f4f4f4;
+    }
+    .btn {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+    }
+    .btn-confirmar { background: var(--cor-sucesso); }
+    .btn-enviar { background: var(--cor-primaria); }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Gerenciar Usuários</h1>
-               
-        <div id="mensagens" class="flash-messages" style="display: none;">
-            <p id="mensagem-texto"></p>
-        </div>
-               
-        <div class="admin-actions">
-            <a href="/admin/usuarios/adicionar" class="btn">Adicionar Novo Usuário</a>
-            <a href="/admin/dashboard" class="btn">Voltar ao Painel</a>
-        </div>
-               
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Tipo</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-usuarios">
-                <!-- Usuários serão carregados via JavaScript -->
-            </tbody>
-        </table>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const mensagem = urlParams.get('msg');
-            
-            if (mensagem) {
-                const mensagensDiv = document.getElementById('mensagens');
-                const mensagemTexto = document.getElementById('mensagem-texto');
-                
-                mensagemTexto.textContent = decodeURIComponent(mensagem);
-                mensagensDiv.style.display = 'block';
-            }
+<div class="container">
+    <h1>Pedidos Pendentes</h1>
 
-            carregarUsuarios();
-        });
-
-        function carregarUsuarios() {
-            const usuarios = [
-                {id: 1, nome: 'João Silva', cpf: '123.456.789-00', tipo: 'cliente'},
-                {id: 2, nome: 'Maria Santos', cpf: '987.654.321-00', tipo: 'motorista'}
-            ];
-
-            const tbody = document.getElementById('tabela-usuarios');
-            tbody.innerHTML = '';
-
-            usuarios.forEach(usuario => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td data-label="ID">${usuario.id}</td>
-                    <td data-label="Nome">${usuario.nome}</td>
-                    <td data-label="CPF">${usuario.cpf}</td>
-                    <td data-label="Tipo">${usuario.tipo}</td>
-                    <td class="actions" data-label="Ações">
-                        <a href="/editar_usuario/${usuario.id}" class="btn btn-small">Editar</a>
-                        <form method="POST" action="/excluir_usuario/${usuario.id}" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
-                            <button type="submit" class="btn btn-small btn-danger">Excluir</button>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Produto</th>
+                <th>Qtd</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.cliente }}</td>
+                <td>{{ pedido.produto }}</td>
+                <td>{{ pedido.quantidade }}</td>
+                <td>{{ pedido.status }}</td>
+                <td>
+                    {% if pedido.status == 'Pendente' %}
+                        <form method="POST" action="/pedidos/{{ pedido.id }}/confirmar" style="display:inline">
+                            <button type="submit" class="btn btn-confirmar">Confirmar</button>
                         </form>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-    </script>
+                    {% endif %}
+                    {% if pedido.status == 'Confirmado' %}
+                        <form method="POST" action="/pedidos/{{ pedido.id }}/enviar" style="display:inline">
+                            <button type="submit" class="btn btn-enviar">Enviar</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
